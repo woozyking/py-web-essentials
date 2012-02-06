@@ -1,0 +1,16 @@
+Goal:
+Provide Python wrappers of famous Web APIs
+
+Known Issues:
+Still in a highly WIP status, and only developed with Python 2.7.x environment.
+
+Changelog:
+[will start once stable]
+
+TODO:
+1. Google Weather API
+	a. Discard weather.py and work should be done based on weather2.py (for the efficiency of ElementTree over Minidom)
+2. util.py
+	a. Add function to properly convert ET to dict
+3. [+] Google Url Shortener API
+4. [+] Google Maps API Family (geocode done)

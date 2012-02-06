@@ -1,39 +1,43 @@
 '''
 Module: gmaps.geocode
 Author: oEL
-Version: 0.1
+Version: 0.5
 Description:
     A python wrapper of the Official Google Maps Geocode API
-        https://maps.googleapis.com/maps/api/geocode/{format}?{parameters}
+        http://maps.googleapis.com/maps/api/geocode/{format}?{queries}
 '''
 
-from sys import stdin
-import urllib2
-import json
+import util
 
-API_URL         = "http://maps.google.com/maps/geo?q=%s&output=%s&oe=%s&key=%s"
-OUTPUT_FORMAT   = "json" # by default. Otherwise xml
-OUTPUT_ENCODE   = "utf8"
-API_KEY         = ""
+API_URL         = "http://maps.googleapis.com/maps/api/geocode/"
+OUTPUT_FORMAT   = "json" # can be xml
 
-def geo_lookup( address ):
+def geo_lookup( addr, lang='en' ):
     '''
-    Stub python doc
+    geo_lookup( address, language ) -> JSON feedback <type 'dict'>
+
+    Parameters:
+        addr: address in string
+        lang: (Optional) desired language code in string
+            see http://goo.gl/Xj4Nx for details
     '''
+    url = util.norm_url( API_URL + OUTPUT_FORMAT, address=addr, language=lang )
+    handler = util.open_url(url)
 
-    # Force UTF-8 and normalize query strings 
-    address = address.decode(stdin.encoding).encode('utf-8')
-    address = urllib2.quote(address)
+    return util.get_json(handler)
 
-    # Prepare URL
-    url = API_URL % ( address, OUTPUT_FORMAT, OUTPUT_ENCODE, API_KEY )
+def reverse_lookup( lat, lng, lang='en' ):
+    '''
+    reverse_lookup( lat, lng, lang ) -> JSON feedback <type 'dict'>
 
-    # Open URL and get a stream back
-    handler = urllib2.urlopen(url)
+    Parameters:
+        lat: latitude in float or str
+        lng: longitude in float or str
+        lang: (Optional) desired language code in string
+            see http://goo.gl/Xj4Nx for details
+    '''
+    ll = str(lat) + ',' + str(lng)
+    url = util.norm_url( API_URL + OUTPUT_FORMAT, latlng=ll )
+    handler = util.open_url(url)
 
-    # TODO: HTTP header info for encode and status for graceful warnings
-
-    return json.load( handler )
-
-def reverse_lookup( lng, lat ):
-    pass
+    return util.get_json(handler)

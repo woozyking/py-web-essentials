@@ -43,7 +43,7 @@ def norm_url( base_url, **param ):
 
     return (base_url + query_str).lower()
 
-def open_url( url ):
+def open_url( url, params=None ):
     '''
     open_url( url ) -> url handler
 
@@ -52,7 +52,7 @@ def open_url( url ):
     handler = None
     
     try:
-        handler = urllib.urlopen( url )
+        handler = urllib.urlopen( url, params )
     except urllib.URLError:
         # TODO: exception handling
         pass
@@ -61,6 +61,8 @@ def open_url( url ):
 
 def get_json( handler ):
     j = json.load( handler, get_encoding( get_headers(handler) ) )
+
+    handler.close()
     
     return j
 

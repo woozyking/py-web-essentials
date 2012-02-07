@@ -12,14 +12,14 @@ Still in a highly WIP status, currently developed and tested under Python 2.7.x 
 
 * Proper packaging!!!
 * [wip] Google Weather API
-	** Discard weather.py and work should be done based on weather2.py (for the efficiency of ElementTree over Minidom)
+  * Discard weather.py and work should be done based on weather2.py (for the efficiency of ElementTree over Minidom)
 * [wip] util.py
-	** Add a function to properly convert ET to dict
-	** More generic and abstract is never generic and abstract enough
+  * Add a function to properly convert ET to dict
+  * More generic and abstract is never generic and abstract enough
 * Google Url Shortener API
 * [wip] Google Maps API Family
-	** Geocode API to be refactored
-	** Others to be added
+  * Geocode API to be refactored
+  × Others to be added
 
 ## License
 

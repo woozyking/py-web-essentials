@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 # geocode.py
 
-import util
+from pwe import util
 
 API_URL         = "http://maps.googleapis.com/maps/api/geocode/"
 OUTPUT_FORMAT   = "json" # can be xml

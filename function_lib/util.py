@@ -1,3 +1,5 @@
+#!/usr/bin/python
+# -*- coding: utf-8 -*-
 # util.py
 
 import urllib
@@ -26,9 +28,6 @@ def norm_url( base_url, **param ):
         query_str = '?'
     else:
         query_str = ''
-    
-    if not param.has_key('sensor'):
-        param['sensor'] = 'false'
     
     keys = sorted( param.keys() )
 

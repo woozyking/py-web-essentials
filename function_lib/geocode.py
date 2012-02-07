@@ -1,11 +1,6 @@
-'''
-Module: gmaps.geocode
-Author: oEL
-Version: 0.5
-Description:
-    A python wrapper of the Official Google Maps Geocode API
-        http://maps.googleapis.com/maps/api/geocode/{format}?{queries}
-'''
+#!/usr/bin/python
+# -*- coding: utf-8 -*-
+# geocode.py
 
 import util
 
@@ -21,7 +16,7 @@ def geo_lookup( addr, lang='en' ):
         lang: (Optional) desired language code in string
             see http://goo.gl/Xj4Nx for details
     '''
-    url = util.norm_url( API_URL + OUTPUT_FORMAT, address=addr, language=lang )
+    url = util.norm_url( API_URL + OUTPUT_FORMAT, address=addr, language=lang, sensor=False )
     handler = util.open_url(url)
 
     return util.get_json(handler)
@@ -37,7 +32,7 @@ def reverse_lookup( lat, lng, lang='en' ):
             see http://goo.gl/Xj4Nx for details
     '''
     ll = str(lat) + ',' + str(lng)
-    url = util.norm_url( API_URL + OUTPUT_FORMAT, latlng=ll )
+    url = util.norm_url( API_URL + OUTPUT_FORMAT, latlng=ll, sensor=False )
     handler = util.open_url(url)
 
     return util.get_json(handler)

@@ -15,7 +15,8 @@ Still in a highly WIP status, currently developed and tested under Python 2.7.x 
 * [wip] util.py
   * Add a function to properly convert ET to dict
   * More generic and abstract is never generic and abstract enough
-* Google Url Shortener API
+* [wip] Url Shortener API
+  * Support for other url shortening services (currently only goo.gl)
 * [wip] Google Maps API Family
   * Geocode API to be refactored
   * Others to be added

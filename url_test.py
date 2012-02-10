@@ -9,7 +9,7 @@ sep = "=" * 5
 long_url = "http://docs.python.org/tutorial/index.html"
 feedback = url_shortener.shorten( long_url )
 
-# pprint.pprint( feedback ) # prints the whole JSON feedback
+pprint.pprint( feedback ) # prints the whole JSON feedback
 print long_url, "shortened to:", feedback['id']
 
 print sep * 10
@@ -18,5 +18,5 @@ print sep * 10
 short_url = "http://goo.gl/c5GO"
 feedback = url_shortener.expand( short_url )
 
-# pprint.pprint( feedback ) # prints the whole JSON feedback
+pprint.pprint( feedback ) # prints the whole JSON feedback
 print short_url, "expanded to:", feedback['longUrl']

@@ -2,32 +2,46 @@
 
 ## Goal:
 
-Provide convenient means to access a variety of web APIs (that your grandparents could start using Python).
+Provide convenient means to access the WWW (that your grandparents could start using Python).
+
+## Features:
+
+(available once stable)
+
+## Changelog:
+
+* v0.1.5:
+  * Weather (pwe.weather)
+    * weather.py and weather2.py unified into one (weather.py), pretty much re-written
+	* Fully convert ElementTree to JSON (dict type), thanks to s-ltf <https://github.com/s-ltf>
+	* Objectified for further extensibility
+  * util.py cleaned up and all relevant code verified
+  * Demo added for all 4 libraries available now (find under the root of the project repo)
+
+* v0.1 (fun-functions):
+  * Weather (pwe.weather)
+    * weather.py (minidom XML implementation), and weather2.py (ElementTree)
+  * Google Maps (pwe.maps)
+    * Geocode lookup and reverse lookup
+	* Places search
+  * URL (pwe.url)
+    * goo.gl URL shortening and expanding
 
 ## Known Issues:
 
-Still in a highly WIP status, currently developed and tested under Python 2.7.x environment (mostly Windows).
+Still in a highly WIP status, currently developed and tested under Python 2.7.x environment only (mostly Windows).
 
 ## TODO:
 
-* [wip] Google Weather API
-  * Discard weather.py and work should be done based on weather2.py (for the efficiency of ElementTree over Minidom)
-* [wip] util.py
-  * Add a function to properly convert ET to dict
-  * More generic and abstract is never generic and abstract enough
-* [wip] Url Shortener API
-  * Support for other url shortening services (currently only goo.gl)
-* [wip] Google Maps API Family
-  * Geocode API to be refactored
-  * Others to be added
+* Google Tasks API
+* Generic OAuth Wrapper
 * Unit testing, exception handling, data encapsulation (where needed) and a lot of those tedious "best practices"
-* Proper packaging!!!
 
 ## License
 
 Released under the FreeBSD license:
 
-Copyright (c) 2012 Py-Web-Essentials
+Copyright (c) 2012 The Py-Web-Essentials (PWE) Team
 
 Redistribution and use in source and binary forms, with or without modification, are permitted provided that the following conditions are met:
 

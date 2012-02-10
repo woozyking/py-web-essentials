@@ -1,79 +1,80 @@
-'''
-Module: py-web-essentials.function_lib.weather (TODO: proper packages)
-Author: oEL
-Version: 0.5
-Description:
-    A python wrapper of the unofficial Google Weather API:
-        http://www.google.com/ig/api?weather={location}&hl={locale}
-    Handles different languages properly
-Known issues: none
-TODO & FIXME: see in-line comments
-'''
+#!/usr/bin/python
+# -*- coding: utf-8 -*-
+# weather.py
 
-from sys import stdin
-import urllib2
-from xml.dom import minidom
+# use the C implementation of xml.etree.ElementTree
+from xml.etree import cElementTree as ET
+from pwe import util
 
-API_URL = "http://www.google.com/ig/api?weather=%s&hl=%s"
+API_URL      = "http://www.google.com/ig/api"
 
-def get_weather( location, locale='' ):
+WEATHER_TAG  = 'weather'
+INFO_TAG     = 'forecast_information'
+CURRENT_TAG  = 'current_conditions'
+FORECAST_TAG = 'forecast_conditions'
+
+def get_weather( location, locale='en-US' ):
     '''
-    get_weather( location[, locale] ) ->
-        DOM Object that contains weather info
-        or "ERROR" if something's wrong (for now, FIXME)
+    '''
+    url = util.norm_url( API_URL, [], weather=location, hl=locale )
+    res = util.open_url(url)
+    data = res.read()
+    header = res.headers
+    encoding = util.get_encoding(header)
+
+    res.close()
+
+    data = util.unicode_s( data, encoding )
+    element = ET.XML(data)
+
+    return Weather(element)
+
+def element2json(element):
+    children = element.getchildren()
+    result = {}
+
+    for child in children:
+        # child.tag gives you the tag name
+        # child items gives you a list of tuples
+        # hardcoded here to reflect the format:
+        #   [ ('data', 'Hamilton, ON') ] from Google Weather
+        result[child.tag] = child.items()[0][1]
+
+    return result
+
+class Weather(object):
+    # TODO: needs tweaks
     
-    location - (case insensitive) a location string, possible cases are:
-        * Specific landmark, e.g. McMaster University
-        * Longitude, Lantitude
-        * Postal code
-        * City name, [province/state], [country], e.g. Hamilton, ON, Canada
-            **  Province/state and country are optional,
-            **  Though you might get an unwanted city
-    locale - (case insensitive) [optional], output language, see:
-        https://sites.google.com/site/tomihasa/google-language-codes
+    def __init__( self, root_element ):
+        weather_element = root_element.find(WEATHER_TAG)
+        info_element = weather_element.find(INFO_TAG)
+        curr_element = weather_element.find(CURRENT_TAG)
 
-    Sample usage:
-    >>> dom_obj = get_weather( 'McMaster University', 'en-US' )
-    >>> xml_str = dom_obj.toprettyxml()
-    >>> print xml_str
-    ...
-    '''
+        # List of all forecast conditions
+        fore_elements = weather_element.findall(FORECAST_TAG)
+        
+        self.info = element2json(info_element)
+        self.curr = element2json(curr_element)
+        self.fore = []
+        
+        for f in fore_elements:
+            self.fore.append( element2json(f) )
 
-    # Make location in UTF-8 for universal language support
-    location = location.decode(stdin.encoding).encode('utf-8')
-    locale = locale.decode(stdin.encoding).encode('utf-8')
+        self.root = { 'version': 1,
+                      WEATHER_TAG: {
+                          INFO_TAG: self.info,
+                          CURRENT_TAG: self.curr,
+                          FORECAST_TAG: self.fore }
+                      }
 
-    # Normalize special characters to URL accepted codes
-    location = urllib2.quote( location )
-    locale = urllib2.quote( locale )
+    def raw(self):
+        return self.root
 
-    # Use string formatting and template
-    url = API_URL % ( location, locale )
+    def information(self):
+        return self.info
 
-    # This behaves somewhat like File I/O
-    handler = urllib2.urlopen( url )
+    def current(self):
+        return self.curr
 
-    if handler.getcode() is not 200:
-        return "ERROR"
-        # TODO: use actual Google feedback to give problem_cause
-
-    # Prepare data
-    raw_data = handler.read()
-    encoding = handler.headers['content-type'].split('charset=')[-1]
-
-    # Just like File I/O, close it as soon as we don't need it
-    handler.close()
-
-    # For non utf-8 cases
-    if encoding is not 'utf-8':
-        u_data = unicode( raw_data, encoding ).encode('utf-8')
-    else:
-        u_data = raw_data
-
-    # Create a DOM object (DOM stands for Document Object Model)
-    dom = minidom.parseString( u_data )
-
-    # strip down the une
-    weather_dom = dom.getElementsByTagName('weather')[0]
-
-    return weather_dom
+    def forecast(self):
+        return self.fore

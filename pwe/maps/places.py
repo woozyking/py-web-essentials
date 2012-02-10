@@ -17,10 +17,9 @@ def find_place( **params ):
     # TODO: validate location and radius types and values
     
     url = util.norm_url( API_URL + OUT_FORMAT, ['key', API_KEY], **params )
+    res = util.open_url(url)
+    j = util.get_json(res)
 
-    print url
-    
-    resp = util.open_url(url)
-    
-    return util.get_json(resp)
-    
+    res.close()
+
+    return j

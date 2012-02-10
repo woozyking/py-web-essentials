@@ -12,10 +12,10 @@ QUOTE_SAFE = ','
 
 def unicode_s( s, src_codec ):
     '''
-unicode_s( s, src_codec ) -> unicode str (<type 'unicode'>)
+    unicode_s( s, src_codec ) -> unicode str (<type 'unicode'>)
 
-Returns the unicode version of the input string.
-'''
+    Returns the unicode version of the input string.
+    '''
     return unicode( s, src_codec ).encode('utf-8')
 
 # TODO: add an ignore list of the keys which have values that are not getting normalized
@@ -23,14 +23,7 @@ def norm_url( base_url, api_key=[], **param):
     '''
     Stub doc
     '''
-    if base_url.endswith('/'):
-        base_url = base_url[:-1]
-
-    if not base_url.endswith('?'):
-        query_str = '?'
-    else:
-        query_str = ''
-    
+    query_str = '?'
     keys = sorted( param.keys() )
 
     for kw in keys:
@@ -54,25 +47,11 @@ def open_url( url, params=None ):
 
     Return the URL handler
     '''
-    handler = None
-    
-    try:
-        handler = urllib.urlopen( url, params )
-    except urllib.URLError:
-        # TODO: exception handling
-        pass
-
-    return handler
+    # TODO: exception handling
+    return urllib.urlopen( url, params )
 
 def get_json( handler ):
-    j = json.load( handler, get_encoding( get_headers(handler) ) )
-
-    handler.close()
-    
-    return j
-
-def get_headers( handler ):
-    return handler.headers
+    return json.load( handler, get_encoding( handler.headers ) )
 
 def get_encoding( header ):
     return header['content-type'].split('charset=')[-1]

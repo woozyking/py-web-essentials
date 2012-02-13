@@ -8,7 +8,7 @@ input simple information (e.g. location) and get a bunch of data about weather
 
 # use the C implementation of xml.etree.ElementTree
 from xml.etree import cElementTree as ET
-from pwe import util
+import util
 
 API_URL      = "http://www.google.com/ig/api"
 

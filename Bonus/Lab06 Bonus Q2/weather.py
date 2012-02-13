@@ -1,6 +1,6 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
-# weather.py
+# weather.py (modified for McMaster Eng 1D04)
 '''
 Weather.py a small module to wrap google's weather api, and makes it possible to
 input simple information (e.g. location) and get a bunch of data about weather
@@ -36,7 +36,7 @@ def get_weather( location, locale='en-US' ):
     data = util.unicode_s( data, encoding )
     element = ET.XML(data)
 
-    return Weather(element)
+    return Weather(element).raw()
 
 def element2json(element):
     '''

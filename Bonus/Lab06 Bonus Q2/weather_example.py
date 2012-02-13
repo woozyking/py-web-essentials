@@ -1,4 +1,3 @@
-
 import weather
 import pprint
 
@@ -8,11 +7,13 @@ location = "McMaster University"
 
 data = weather.get_weather(location)
 
+print "ugly looking block of code\n"
+print data
 
-print "ugly looking block of code\n",data
+print "-" * 20
 
 print
 
-print "better looking code\n"
+print "better looking code using pprint module\n"
 pprint.pprint( data )
 

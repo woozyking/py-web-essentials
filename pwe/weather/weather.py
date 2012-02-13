@@ -1,6 +1,10 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 # weather.py
+'''
+Weather.py a small module to wrap google's weather api, and makes it possible to
+input simple information (e.g. location) and get a bunch of data about weather
+'''
 
 # use the C implementation of xml.etree.ElementTree
 from xml.etree import cElementTree as ET
@@ -15,6 +19,11 @@ FORECAST_TAG = 'forecast_conditions'
 
 def get_weather( location, locale='en-US' ):
     '''
+    get_weather(Location[,language] ) -> dict
+
+    input location desired as a string, [ and language (optional),default english]
+    output Weather information,formatted into a dictionary
+
     '''
     url = util.norm_url( API_URL, [], weather=location, hl=locale )
     res = util.open_url(url)
@@ -30,6 +39,13 @@ def get_weather( location, locale='en-US' ):
     return Weather(element)
 
 def element2json(element):
+    '''
+    element2json ( ElementTree Object ) - > dict
+
+    converts an ElementTree Object into a corresponding dictionary, keeping the same
+    node distribution.
+    
+    '''
     children = element.getchildren()
     result = {}
 

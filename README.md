@@ -54,4 +54,5 @@ THIS SOFTWARE IS PROVIDED BY THE FREEBSD PROJECT ``AS IS'' AND ANY EXPRESS OR IM
 
 * oEL <https://github.com/ruli>
 * s-ltf <https://github.com/s-ltf>
+* samanthawh <https://github.com/samanthawh>
 * YOU, yeah YOU! Join us by forking this repo, feed this baby by making pull requests!
